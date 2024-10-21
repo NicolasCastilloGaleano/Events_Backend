@@ -18,7 +18,6 @@ class EventView:
 
     def get_events(self):
         events = self.event_service.get_events()
-        print(events)
         if events:
             return jsonify(events), 200
         return jsonify({"error": "Event not found"}), 404

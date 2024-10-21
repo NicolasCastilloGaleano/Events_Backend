@@ -6,3 +6,4 @@ load_dotenv()
 
 class Config:
     MONGO_URI = os.getenv("MONGO_URI")
+    SECURITY_URI = os.getenv("SECURITY_URI")
