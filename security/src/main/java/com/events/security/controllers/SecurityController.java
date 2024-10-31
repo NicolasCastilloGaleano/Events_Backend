@@ -3,6 +3,7 @@ package com.events.security.controllers;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -124,10 +125,10 @@ public class SecurityController {
 
     @PostMapping("permissions-validation")
     public ResponseEntity<?> permissionsValidation(final HttpServletRequest request,
-            @RequestBody Permission thePermission) {
+            @RequestBody Map<String, String> data) {
         try {
-            boolean success = this.validatorService.validationRolePermission(request, thePermission.getRoute(),
-                    thePermission.getMethod());
+            boolean success = this.validatorService.validationRolePermission(request, data.get("route"),
+                    data.get("route"));
             if (success) {
                 this.jsonResponsesService.setMessage("permiso valido");
                 return ResponseEntity.status(HttpStatus.OK).body(this.jsonResponsesService.getFinalJSON());

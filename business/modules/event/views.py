@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from modules.event.services import EventService
+from modules.event.validations import validate_event_data
 
 
 class EventView:
@@ -8,6 +9,10 @@ class EventView:
 
     def create_event(self):
         data = request.get_json()
+
+        validation_error = validate_event_data(data)
+        if validation_error:
+            return validation_error
         event = self.event_service.create_event(data)
         return (
             jsonify(

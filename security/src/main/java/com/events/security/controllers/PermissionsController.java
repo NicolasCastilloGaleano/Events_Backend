@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.events.security.models.Permission;
+import com.events.security.models.Role;
 import com.events.security.repositories.PermissionRepository;
+import com.events.security.repositories.RoleRepository;
 import com.events.security.services.JSONResponsesService;
 
 @CrossOrigin
@@ -16,13 +18,15 @@ import com.events.security.services.JSONResponsesService;
 @RequestMapping("permissions")
 public class PermissionsController {
     private final PermissionRepository thePermissionRepository;
+    private final RoleRepository theRolesRepository;
     private final JSONResponsesService jsonResponsesService;
 
     @Autowired
-    public PermissionsController(PermissionRepository thePermissionRepository,
+    public PermissionsController(PermissionRepository thePermissionRepository, RoleRepository theRolesRepository,
             JSONResponsesService jsonResponsesService) {
         this.jsonResponsesService = jsonResponsesService;
         this.thePermissionRepository = thePermissionRepository;
+        this.theRolesRepository = theRolesRepository;
     }
 
     @GetMapping("")
@@ -64,6 +68,9 @@ public class PermissionsController {
                 this.thePermissionRepository.save(newPermission);
                 this.jsonResponsesService.setData(newPermission);
                 this.jsonResponsesService.setMessage("Permiso agregado con éxito");
+                Role role = this.theRolesRepository.findById("656021611ae5d15c7d6d2517").orElse(null);
+                role.addPermission(newPermission);
+                this.theRolesRepository.save(role);
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(this.jsonResponsesService.getFinalJSON());
             }
