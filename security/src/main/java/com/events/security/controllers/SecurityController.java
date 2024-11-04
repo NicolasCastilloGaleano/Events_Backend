@@ -64,7 +64,7 @@ public class SecurityController {
                         .body(this.jsonResponsesService.getFinalJSON());
             }
         } catch (Exception e) {
-            this.jsonResponsesService.setMessage("Error al intentar iniciar sesion");
+            this.jsonResponsesService.setMessage("Error del servidor al intentar iniciar sesion");
             this.jsonResponsesService.setError(e.toString());
             this.jsonResponsesService.setData(null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -83,8 +83,8 @@ public class SecurityController {
                         .body(this.jsonResponsesService.getFinalJSON());
             } else {
                 newUser.setPassword(encryptionService.convertirSHA256(newUser.getPassword()));
-                Role defaultRole = this.theRoleRepository.getRole("default").orElse(null);
-                newUser.setRole(defaultRole);
+                Role userRole = this.theRoleRepository.getRole("user").orElse(null);
+                newUser.setRole(userRole);
                 this.theUserRepository.save(newUser);
                 this.jsonResponsesService.setMessage("Usuario creado con exito");
                 this.jsonResponsesService.setData(newUser);
@@ -92,7 +92,7 @@ public class SecurityController {
                         .body(this.jsonResponsesService.getFinalJSON());
             }
         } catch (Exception e) {
-            this.jsonResponsesService.setMessage("Error al intentar crear el usuario");
+            this.jsonResponsesService.setMessage("Error del servidor al intentar crear el usuario");
             this.jsonResponsesService.setError(e.toString());
             this.jsonResponsesService.setData(null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -115,7 +115,7 @@ public class SecurityController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(this.jsonResponsesService.getFinalJSON());
             }
         } catch (Exception e) {
-            this.jsonResponsesService.setMessage("Error al validar el token");
+            this.jsonResponsesService.setMessage("Error del servidor al validar el token");
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -128,7 +128,7 @@ public class SecurityController {
             @RequestBody Map<String, String> data) {
         try {
             boolean success = this.validatorService.validationRolePermission(request, data.get("route"),
-                    data.get("route"));
+                    data.get("method"));
             if (success) {
                 this.jsonResponsesService.setMessage("permiso valido");
                 return ResponseEntity.status(HttpStatus.OK).body(this.jsonResponsesService.getFinalJSON());
@@ -137,7 +137,7 @@ public class SecurityController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(this.jsonResponsesService.getFinalJSON());
             }
         } catch (Exception e) {
-            this.jsonResponsesService.setMessage("Error al validar el permiso");
+            this.jsonResponsesService.setMessage("Error del servidor al validar el permiso");
             this.jsonResponsesService.setError(e.toString());
             this.jsonResponsesService.setData(null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

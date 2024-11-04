@@ -47,7 +47,7 @@ public class PermissionsController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al buscar permisos");
+            this.jsonResponsesService.setMessage("Error del servidor al buscar permisos");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -77,7 +77,7 @@ public class PermissionsController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al intentar crear el permiso");
+            this.jsonResponsesService.setMessage("Error del servidor al intentar crear el permiso");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -99,7 +99,7 @@ public class PermissionsController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error en la busqueda del permiso");
+            this.jsonResponsesService.setMessage("Error del servidor en la busqueda del permiso");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -136,7 +136,7 @@ public class PermissionsController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error en la actualizacion del permiso");
+            this.jsonResponsesService.setMessage("Error del servidor en la actualizacion del permiso");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -161,7 +161,7 @@ public class PermissionsController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error en la eliminacion del permiso");
+            this.jsonResponsesService.setMessage("Error del servidor en la eliminacion del permiso");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }

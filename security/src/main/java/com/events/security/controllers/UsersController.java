@@ -58,7 +58,7 @@ public class UsersController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al buscar usuarios");
+            this.jsonResponsesService.setMessage("Error del servidor al buscar usuarios");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -82,7 +82,7 @@ public class UsersController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error en la busqueda del usuario");
+            this.jsonResponsesService.setMessage("Error del servidor en la busqueda del usuario");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -116,7 +116,7 @@ public class UsersController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error en la actualizacion del usuario");
+            this.jsonResponsesService.setMessage("Error del servidor en la actualizacion del usuario");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -140,7 +140,7 @@ public class UsersController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error en la eliminacion del usuario");
+            this.jsonResponsesService.setMessage("Error del servidor en la eliminacion del usuario");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -174,7 +174,7 @@ public class UsersController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al añadir el rol al usuario");
+            this.jsonResponsesService.setMessage("Error del servidor al añadir el rol al usuario");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -199,7 +199,7 @@ public class UsersController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al remover el rol al usuario");
+            this.jsonResponsesService.setMessage("Error del servidor al remover el rol al usuario");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -232,7 +232,7 @@ public class UsersController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al añadir el perfil al usuario");
+            this.jsonResponsesService.setMessage("Error del servidor al añadir el perfil al usuario");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -257,7 +257,7 @@ public class UsersController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al remover el perfil al usuario");
+            this.jsonResponsesService.setMessage("Error del servidor al remover el perfil al usuario");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }

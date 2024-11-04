@@ -48,14 +48,16 @@ public class ValidatorsService {
                         return true;
                     }
                 }
-            } else {
                 logger.info("no tiene este permiso");
+                return false;
+            } else {
                 return false;
             }
 
+        } else {
+            logger.info("el usuario no existe");
+            return false;
         }
-        logger.info("el usuario no existe");
-        return false;
     }
 
     public User getUser(final HttpServletRequest request) {
