@@ -28,7 +28,9 @@ def verificar_permisos(token):
 @app.before_request
 def check_permissions():
     token = request.headers.get("Authorization")
-    if not token or not verificar_permisos(token):
+    if (token and not verificar_permisos(token)) or (
+        not token and not (request.path == "/events/list" and request.method == "POST")
+    ):
         return jsonify({"error": "No autorizado"}), 401
 
 
