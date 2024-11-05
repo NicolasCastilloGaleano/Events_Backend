@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.events.security.models.Permission;
 import com.events.security.models.Role;
 import com.events.security.models.User;
 import com.events.security.repositories.RoleRepository;
