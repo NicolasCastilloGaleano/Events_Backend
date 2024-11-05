@@ -3,25 +3,39 @@ from bson import ObjectId
 
 class Event:
     def __init__(
-        self, name, date, location, capacity, description, organizer_id, _id=None
+        self,
+        name,
+        site,
+        date,
+        categories,
+        description,
+        organizer_id,
+        entity,
+        image,
+        restrictions,
+        _id=None,
     ):
         self._id = ObjectId() if _id is None else _id
-        self.name = name
+        self.name: str = name
+        self.site: str = site
+        self.description: str = description
         self.date = date
-        self.location = location
-        self.capacity = capacity
-        self.description = description
+        self.categories: list[str] = categories
+        self.entity: str = entity
+        self.image: str = image
+        self.restrictions: list[str] = restrictions
         self.organizer_id = ObjectId(organizer_id)
-        self.participants = []
 
     def to_dict(self):
         return {
             "_id": str(self._id),
             "name": self.name,
-            "date": self.date,
-            "location": self.location,
-            "capacity": self.capacity,
+            "site": self.site,
             "description": self.description,
+            "date": self.date,
+            "categories": [str(categorie) for categorie in self.categories],
+            "entity": self.entity,
+            "image": self.image,
+            "restrictions": [str(restriction) for restriction in self.restrictions],
             "organizer_id": str(self.organizer_id),
-            "participants": [str(participant) for participant in self.participants],
         }

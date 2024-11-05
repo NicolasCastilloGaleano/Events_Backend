@@ -16,6 +16,7 @@ public class CorsConfig {
 
         // Configura los permisos CORS para tu dominio de vite
         config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("http://localhost:5000");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
 

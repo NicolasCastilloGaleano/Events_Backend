@@ -39,12 +39,8 @@ public class ValidatorsService {
             Role theRole = theUser.getRole();
             url = url.replaceAll("[0-9a-fA-F]{24}", "?");
             url = url.replaceAll("\\d+", "?");
-            if (theRole.getId().equals("656021611ae5d15c7d6d2517")) {
-                return true;
-            }
             Permission thePermission = thePermissionRepository.getPermission(url,
                     method).orElse(null);
-            logger.info(theRole.toString());
 
             if (theRole != null && thePermission != null) {
                 for (Permission permission : theRole.getTotalPermissions()) {
@@ -52,14 +48,16 @@ public class ValidatorsService {
                         return true;
                     }
                 }
-            } else {
                 logger.info("no tiene este permiso");
+                return false;
+            } else {
                 return false;
             }
 
+        } else {
+            logger.info("el usuario no existe");
+            return false;
         }
-        logger.info("el usuario no existe");
-        return false;
     }
 
     public User getUser(final HttpServletRequest request) {

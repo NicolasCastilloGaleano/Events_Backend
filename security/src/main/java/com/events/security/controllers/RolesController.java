@@ -48,7 +48,7 @@ public class RolesController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al buscar roles");
+            this.jsonResponsesService.setMessage("Error del servidor al buscar roles");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -73,7 +73,7 @@ public class RolesController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al intentar crear el rol");
+            this.jsonResponsesService.setMessage("Error del servidor al intentar crear el rol");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -96,7 +96,7 @@ public class RolesController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error en la busqueda del rol");
+            this.jsonResponsesService.setMessage("Error del servidor en la busqueda del rol");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -129,7 +129,7 @@ public class RolesController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error en la actualizacion del rol");
+            this.jsonResponsesService.setMessage("Error del servidor en la actualizacion del rol");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -153,7 +153,7 @@ public class RolesController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error en la eliminacion del perfil");
+            this.jsonResponsesService.setMessage("Error del servidor en la eliminacion del perfil");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -190,7 +190,7 @@ public class RolesController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al añadir el permiso al rol");
+            this.jsonResponsesService.setMessage("Error del servidor al añadir el permiso al rol");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
@@ -220,7 +220,7 @@ public class RolesController {
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al remover el permiso al rol");
+            this.jsonResponsesService.setMessage("Error del servidor al remover el permiso al rol");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(this.jsonResponsesService.getFinalJSON());
         }
