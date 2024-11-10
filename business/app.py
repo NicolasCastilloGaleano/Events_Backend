@@ -27,6 +27,9 @@ def verificar_permisos(token):
 
 @app.before_request
 def check_permissions():
+    if request.method == "OPTIONS":
+        return "", 200
+    
     token = request.headers.get("Authorization")
     if (token and not verificar_permisos(token)) or (
         not token and not (request.path == "/events/list" and request.method == "POST")
