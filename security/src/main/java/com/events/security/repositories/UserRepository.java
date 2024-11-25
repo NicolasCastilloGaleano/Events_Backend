@@ -14,4 +14,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     @Query(value = "{}", fields = "{'_id': 1, 'email': 1,'role':1}")
     List<User> findAllProjectedBy();
+
+    @Query(value = "{'_id': ?0}", fields = "{'_id': 1, 'email': 1,'userProfile':1}")
+    Optional<User> findById_noRole(String id);
 }

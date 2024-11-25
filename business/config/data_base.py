@@ -17,3 +17,6 @@ class Database:
         app.db = client.get_database(
             "business"
         )  # Crea una referencia a la base de datos
+        app.db_security = client.get_database(
+            "ms-Security"
+        )  # Crea una referencia a la base de datos de seguridad
