@@ -88,6 +88,31 @@ public class UsersController {
         }
     }
 
+    @GetMapping("{id}/no_role")
+    public ResponseEntity<?> showWithoutRole(@PathVariable String id) {
+        try {
+            User theUser = this.theUserRepository
+                    .findById_noRole(id)
+                    .orElse(null);
+            System.out.println(theUser);
+            if (theUser != null) {
+                this.jsonResponsesService.setData(theUser);
+                this.jsonResponsesService.setMessage("usuario encontrado con exito");
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(this.jsonResponsesService.getFinalJSON());
+            } else {
+                this.jsonResponsesService.setMessage(NOT_FOUND_USER);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(this.jsonResponsesService.getFinalJSON());
+            }
+        } catch (Exception e) {
+            this.jsonResponsesService.setData(null);
+            this.jsonResponsesService.setError(e.toString());
+            this.jsonResponsesService.setMessage("Error del servidor en la busqueda del usuario");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(this.jsonResponsesService.getFinalJSON());
+        }
+    }
+
     @PutMapping("{id}")
     public ResponseEntity<?> udpate(@PathVariable String id, @RequestBody User theNewUser) {
         try {

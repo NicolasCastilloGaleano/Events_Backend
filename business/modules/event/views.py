@@ -59,19 +59,16 @@ class EventView:
 
     def get_event(self, event_id):
         try:
-            print(f"Fetching event with ID: {event_id}")
             event = self.event_service.get_event_by_id(event_id)
-            print(f"Fetched event: {event}")
             if event:
                 # Convierte '_id' de ObjectId a str
-                event['_id'] = str(event['_id'])
+                event["_id"] = str(event["_id"])
                 return (
                     jsonify(success_response(event, "Evento encontrado correctamente")),
                     200,
                 )
             return jsonify(error_response("Evento no encontrado", None)), 404
         except Exception as e:
-            print(f"Exception encountered: {e}")
             return (
                 jsonify(
                     system_error_response(
@@ -81,6 +78,32 @@ class EventView:
                 500,
             )
 
+    def get_event_users(self, event_id):
+        try:
+            users = self.event_service.get_event_users(event_id)
+            if users:
+                return (
+                    jsonify(
+                        success_response(users, "usuarios encontrados correctamente")
+                    ),
+                    200,
+                )
+            return (
+                jsonify(
+                    error_response("No se encontraron usuarios para este evento", None)
+                ),
+                404,
+            )
+        except Exception as e:
+            return (
+                jsonify(
+                    system_error_response(
+                        "Error del sistema al intentar obtener los usuarios de un evento",
+                        str(e),
+                    )
+                ),
+                500,
+            )
 
     def update_event(self, event_id):
         try:

@@ -88,13 +88,9 @@ class InscriptionView:
 
     def update_inscription(self, inscription_id):
         try:
-            data = request.get_json()
-            validation_error = validate_inscription_data(data)
-            if validation_error:
-                return jsonify(error_response("Campos Faltantes", data=None)), 400
-            self.inscription_service.update_inscription(inscription_id, data)
+            self.inscription_service.update_inscription(inscription_id)
             return (
-                jsonify(success_response(data, "inscripcion actualizada con exito")),
+                jsonify(success_response(None, "inscripcion actualizada con exito")),
                 201,
             )
         except Exception as e:

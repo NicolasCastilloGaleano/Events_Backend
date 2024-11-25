@@ -1,16 +1,23 @@
-from modules.event.models import Event
 from pymongo.collection import Collection
 from pymongo.database import Database
-from bson import ObjectId
-from flask import current_app
+from flask import current_app, request
+import requests
+from modules.event.models import Event
+from modules.inscription.services import InscriptionService
 
 
 class EventService:
+    inscription_service = InscriptionService()
 
     def get_collection(self):
         db: Database = current_app.db
         events: Collection = db.get_collection("events")
         return events
+
+    def get_users_collection(self):
+        db: Database = current_app.db_security
+        users: Collection = db.get_collection("user")
+        return users
 
     def process_filters(self, filters):
         new_filters = {}
@@ -44,10 +51,34 @@ class EventService:
     def get_event_by_id(self, event_id):
         return self.get_collection().find_one({"_id": event_id})
 
+    def get_event_users(self, event_id):
+        filter = {"event_id": event_id}
+        inscriptions = self.inscription_service.get_inscriptions(filter)
+        token = request.headers.get("Authorization")
+        users = []
+        for inscription in inscriptions:
+            url = f"{current_app.config['SECURITY_URI']}/users/{inscription["user_id"]}/no_role"
+            user = requests.get(
+                url=url,
+                headers={"Authorization": token},
+                timeout=5,
+            ).json()["data"]
+            print(user)
+            users.append(
+                {
+                    "inscription_id": inscription["_id"],
+                    "user_id": user["id"],
+                    "email": user["email"],
+                    "name": user["userProfile"]["name"],
+                    "image": user["userProfile"]["profilePhoto"],
+                }
+            )
+        return users
+
     def update_event(self, event_id, update_data):
         return self.get_collection().update_one(
-            {"_id": ObjectId(event_id)}, {"$set": update_data}
+            {"_id": event_id}, {"$set": update_data}
         )
 
     def delete_event(self, event_id):
-        return self.get_collection().delete_one({"_id": ObjectId(event_id)})
+        return self.get_collection().delete_one({"_id": event_id})

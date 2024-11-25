@@ -1,7 +1,6 @@
 from modules.inscription.models import Inscription
 from pymongo.collection import Collection
 from pymongo.database import Database
-from bson import ObjectId
 from flask import current_app
 
 
@@ -42,12 +41,17 @@ class InscriptionService:
         return inscriptions
 
     def get_inscription_by_id(self, inscription_id):
-        return self.get_collection().find_one({"_id": ObjectId(inscription_id)})
+        return self.get_collection().find_one({"_id": inscription_id})
 
-    def update_inscription(self, inscription_id, update_data):
+    def update_inscription(self, inscription_id):
+        inscription = self.get_inscription_by_id(inscription_id)
+        inscription["participated"] = (
+            True if inscription["participated"] is False else False
+        )
         return self.get_collection().update_one(
-            {"_id": ObjectId(inscription_id)}, {"$set": update_data}
+            {"_id": inscription_id},
+            {"$set": {"participated": inscription["participated"]}},
         )
 
     def delete_inscription(self, inscription_id):
-        return self.get_collection().delete_one({"_id": ObjectId(inscription_id)})
+        return self.get_collection().delete_one({"_id": inscription_id})
