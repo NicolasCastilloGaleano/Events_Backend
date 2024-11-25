@@ -1,15 +1,10 @@
 from flask import jsonify
 
 
-def validate_event_data(data):
+def validate_inscription_data(data):
     required_fields = [
-        "name",
-        "site",
-        "description",
-        "date",
-        "categories",
-        "image",
-        "organizer_id",
+        "user_id",
+        "event_id",
     ]
     missing_fields = [field for field in required_fields if field not in data]
 
