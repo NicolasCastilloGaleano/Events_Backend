@@ -8,7 +8,16 @@ event_bp = Blueprint("event_bp", __name__)
 
 
 # Habilita CORS en el Blueprint de eventos
-CORS(event_bp, resources={r"/*": {"origins": ["http://localhost:5173"], "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Authorization", "Content-Type"]}})
+CORS(
+    event_bp,
+    resources={
+        r"/*": {
+            "origins": ["http://localhost:5173"],
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Authorization", "Content-Type"],
+        }
+    },
+)
 
 
 event_view = EventView()

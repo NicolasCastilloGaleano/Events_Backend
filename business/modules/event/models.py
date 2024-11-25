@@ -1,4 +1,5 @@
 from bson import ObjectId
+import json
 
 
 class Event:
@@ -13,6 +14,7 @@ class Event:
         entity,
         image,
         restrictions,
+        is_active=True,
         _id=None,
     ):
         self._id = ObjectId() if _id is None else _id
@@ -25,10 +27,11 @@ class Event:
         self.image: str = image
         self.restrictions: list[str] = restrictions
         self.organizer_id = ObjectId(organizer_id)
+        self.is_active = is_active
 
     def to_dict(self):
-        return {
-            "_id": str(self._id),
+        event = {
+            "_id": ObjectId(str(self._id)),
             "name": self.name,
             "site": self.site,
             "description": self.description,
@@ -38,4 +41,6 @@ class Event:
             "image": self.image,
             "restrictions": [str(restriction) for restriction in self.restrictions],
             "organizer_id": str(self.organizer_id),
+            "is_active": self.is_active,
         }
+        return json.dumps(event)
