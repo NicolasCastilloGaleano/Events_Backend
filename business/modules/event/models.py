@@ -30,8 +30,8 @@ class Event:
         self.is_active = is_active
 
     def to_dict(self):
-        event = {
-            "_id": ObjectId(str(self._id)),
+        return {
+            "_id": str(self._id),
             "name": self.name,
             "site": self.site,
             "description": self.description,
@@ -43,4 +43,3 @@ class Event:
             "organizer_id": str(self.organizer_id),
             "is_active": self.is_active,
         }
-        return json.dumps(event)

@@ -6,9 +6,12 @@ from utils.response_service import (
     success_response,
     system_error_response,
 )
+from modules.inscription.services import InscriptionService
 
 
 class EventView:
+    inscription_service = InscriptionService()
+
     def __init__(self):
         self.event_service = EventService()
 
@@ -39,6 +42,37 @@ class EventView:
             data = request.get_json()
             filters = data.get("filters", {})
             events = self.event_service.get_events(filters)
+            if events:
+                return (
+                    jsonify(
+                        success_response(events, "Eventos encontrados correctamente")
+                    ),
+                    200,
+                )
+            return jsonify(error_response("No se encontraron eventos", None)), 404
+        except Exception as e:
+            return (
+                jsonify(
+                    system_error_response(
+                        "Error del sistema al intentar listar los eventos", str(e)
+                    )
+                ),
+                500,
+            )
+
+    def get_user_events(self, user_id):
+        try:
+            filters = {"user_id": user_id}
+            inscriptions = self.inscription_service.get_inscriptions(filters)
+            data = request.get_json()
+            events = []
+            for inscription in inscriptions:
+                event = self.event_service.get_event_by_id(inscription["event_id"])
+                if data:
+                    if data["date"] in event["date"]:
+                        events.append(event)
+                else:
+                    events.append(event)
             if events:
                 return (
                     jsonify(
