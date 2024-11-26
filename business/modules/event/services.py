@@ -63,7 +63,6 @@ class EventService:
                 headers={"Authorization": token},
                 timeout=5,
             ).json()["data"]
-            print(user)
             users.append(
                 {
                     "inscription_id": inscription["_id"],

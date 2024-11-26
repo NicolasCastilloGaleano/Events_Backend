@@ -5,6 +5,7 @@ from config.data_base import Database
 from config.config import Config
 from flask_cors import CORS
 import requests
+import re
 
 app = Flask(__name__)
 
@@ -44,7 +45,16 @@ def check_permissions():
 
     token = request.headers.get("Authorization")
     if (token and not verificar_permisos(token)) or (
-        not token and not (request.path == "/events/list" and request.method == "POST")
+        (not token)
+        and (
+            not (
+                (request.path == "/events/list" and request.method == "POST")
+                or (
+                    re.match(r"/events/[0-9a-fA-F]{24}", request.path)
+                    and request.method == "GET"
+                )
+            )
+        )
     ):
         return jsonify({"error": "No autorizado"}), 401
 
