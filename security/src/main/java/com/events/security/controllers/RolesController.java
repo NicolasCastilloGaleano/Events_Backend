@@ -141,6 +141,16 @@ public class RolesController {
         try {
             Role theRole = this.theRoleRepository.findById(id).orElse(null);
             if (theRole != null) {
+                if (theRole.getName().equals("admin")) {
+                    this.jsonResponsesService.setMessage("No se puede eliminar el rol admin");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(this.jsonResponsesService.getFinalJSON());
+                }
+                if (theRole.getTotalPermissions().length > 0) {
+                    this.jsonResponsesService.setMessage("No se puede eliminar un rol con permisos");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(this.jsonResponsesService.getFinalJSON());
+                }
                 this.theRoleRepository.delete(theRole);
                 this.jsonResponsesService.setData(theRole);
                 this.jsonResponsesService.setMessage("Se elimino correctamente el rol");

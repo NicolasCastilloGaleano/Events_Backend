@@ -22,6 +22,21 @@ class EventView:
             validation_error = validate_event_data(data)
             if validation_error:
                 return jsonify(error_response("Campos Faltantes", data=None)), 400
+            filters = {
+                "site": data["site"],
+                "date": data["date"],
+                "time": data["time"],
+            }
+            conflict_event = self.event_service.get_events(filters)
+            if conflict_event:
+                return (
+                    jsonify(
+                        error_response(
+                            "Ya existe un evento en este horario y lugar", None
+                        )
+                    ),
+                    400,
+                )
             event = self.event_service.create_event(data)
             return (
                 jsonify(success_response(event.to_dict(), "Evento creado con exito")),
@@ -65,9 +80,11 @@ class EventView:
             filters = {"user_id": user_id}
             inscriptions = self.inscription_service.get_inscriptions(filters)
             data = request.get_json()
+            data = data.get("filters", {})
             events = []
             for inscription in inscriptions:
                 event = self.event_service.get_event_by_id(inscription["event_id"])
+                event["inscription_id"] = inscription["_id"]
                 if data:
                     if data["date"] in event["date"]:
                         events.append(event)
@@ -80,7 +97,7 @@ class EventView:
                     ),
                     200,
                 )
-            return jsonify(error_response("No se encontraron eventos", None)), 404
+            return jsonify(success_response([], "No se encontraron eventos")), 200
         except Exception as e:
             return (
                 jsonify(

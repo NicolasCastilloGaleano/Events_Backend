@@ -19,6 +19,12 @@ class InscriptionView:
             validation_error = validate_inscription_data(data)
             if validation_error:
                 return jsonify(error_response("Campos Faltantes", data=None)), 400
+            inscription_existe = self.inscription_service.get_inscriptions(data)
+            if inscription_existe:
+                return (
+                    jsonify(error_response("inscripcion ya existente", None)),
+                    400,
+                )
             inscription = self.inscription_service.create_inscription(data)
             return (
                 jsonify(
@@ -52,7 +58,7 @@ class InscriptionView:
                     ),
                     200,
                 )
-            return jsonify(error_response("No se encontraron inscripciones", None)), 404
+            return jsonify(success_response([], "No se encontraron inscripciones")), 200
         except Exception as e:
             return (
                 jsonify(

@@ -7,6 +7,7 @@ def validate_event_data(data):
         "site",
         "description",
         "date",
+        "time",
         "categories",
         "image",
         "organizer_id",

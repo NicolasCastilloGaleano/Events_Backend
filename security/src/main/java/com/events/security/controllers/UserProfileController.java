@@ -63,19 +63,12 @@ public class UserProfileController {
     @PostMapping("")
     public ResponseEntity<?> store(@RequestBody UserProfile userProfile) {
         try {
-            UserProfile theActualProfile = this.theUserprofileRepository.getProfile(
-                    userProfile.getNumberPhone()).orElse(null);
-            if (theActualProfile != null) {
-                this.jsonResponsesService.setMessage("Ya existe un perfil con este telefono");
-                return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(this.jsonResponsesService.getFinalJSON());
-            } else {
-                this.theUserprofileRepository.save(userProfile);
-                this.jsonResponsesService.setMessage("Perfil agregado con éxito");
-                this.jsonResponsesService.setData(userProfile);
-                return ResponseEntity.status(HttpStatus.OK)
-                        .body(this.jsonResponsesService.getFinalJSON());
-            }
+            this.theUserprofileRepository.save(userProfile);
+            this.jsonResponsesService.setMessage("Perfil agregado con éxito");
+            this.jsonResponsesService.setData(userProfile);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(this.jsonResponsesService.getFinalJSON());
+
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setError(e.toString());
@@ -114,24 +107,13 @@ public class UserProfileController {
         try {
             UserProfile theProfile = this.theUserprofileRepository.findById(id).orElse(null);
             if (theProfile != null) {
-                if (!theProfile.getNumberPhone().equals(theNewProfile.getNumberPhone())
-                        && this.theUserprofileRepository.getProfile(theNewProfile.getNumberPhone())
-                                .orElse(null) != null) {
-                    this.jsonResponsesService.setMessage("Ya existe un perfil con este telefono");
-                    return ResponseEntity.status(HttpStatus.CONFLICT).body(this.jsonResponsesService.getFinalJSON());
-                } else {
-                    theProfile.setName(theNewProfile.getName());
-                    theProfile.setLastName(theNewProfile.getLastName());
-                    theProfile.setProfilePhoto(theNewProfile.getProfilePhoto());
-                    theProfile.setBirthday(theNewProfile.getBirthday());
-                    theProfile.setBackgroundImage(theNewProfile.getBackgroundImage());
-                    theProfile.setNumberPhone(theNewProfile.getNumberPhone());
-                    theProfile.setStatus(theNewProfile.getStatus());
-                    this.theUserprofileRepository.save(theProfile);
-                    this.jsonResponsesService.setData(theProfile);
-                    this.jsonResponsesService.setMessage("Perfil actualizado");
-                    return ResponseEntity.status(HttpStatus.OK).body(this.jsonResponsesService.getFinalJSON());
-                }
+                theProfile.setName(theNewProfile.getName());
+                theProfile.setProfilePhoto(theNewProfile.getProfilePhoto());
+                this.theUserprofileRepository.save(theProfile);
+                this.jsonResponsesService.setData(theProfile);
+                this.jsonResponsesService.setMessage("Perfil actualizado");
+                return ResponseEntity.status(HttpStatus.OK).body(this.jsonResponsesService.getFinalJSON());
+
             } else {
                 this.jsonResponsesService.setMessage("No se encontro al perfil a actualizar");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(this.jsonResponsesService.getFinalJSON());

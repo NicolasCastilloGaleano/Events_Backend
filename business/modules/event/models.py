@@ -8,6 +8,7 @@ class Event:
         name,
         site,
         date,
+        time,
         categories,
         description,
         organizer_id,
@@ -22,6 +23,7 @@ class Event:
         self.site: str = site
         self.description: str = description
         self.date = date
+        self.time = time
         self.categories: list[str] = categories
         self.entity: str = entity
         self.image: str = image
@@ -36,6 +38,7 @@ class Event:
             "site": self.site,
             "description": self.description,
             "date": self.date,
+            "time": self.time,
             "categories": [str(categorie) for categorie in self.categories],
             "entity": self.entity,
             "image": self.image,

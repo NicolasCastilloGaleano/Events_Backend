@@ -94,7 +94,6 @@ public class UsersController {
             User theUser = this.theUserRepository
                     .findById_noRole(id)
                     .orElse(null);
-            System.out.println(theUser);
             if (theUser != null) {
                 this.jsonResponsesService.setData(theUser);
                 this.jsonResponsesService.setMessage("usuario encontrado con exito");
