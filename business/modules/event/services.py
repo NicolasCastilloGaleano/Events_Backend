@@ -14,11 +14,6 @@ class EventService:
         events: Collection = db.get_collection("events")
         return events
 
-    def get_users_collection(self):
-        db: Database = current_app.db_security
-        users: Collection = db.get_collection("user")
-        return users
-
     def process_filters(self, filters):
         new_filters = {}
 
@@ -66,10 +61,17 @@ class EventService:
             users.append(
                 {
                     "inscription_id": inscription["_id"],
+                    "participated": inscription["participated"],
                     "user_id": user["id"],
                     "email": user["email"],
-                    "name": user["userProfile"]["name"],
-                    "image": user["userProfile"]["profilePhoto"],
+                    "name": (
+                        user["userProfile"]["name"] if user["userProfile"] else None
+                    ),
+                    "image": (
+                        user["userProfile"]["profilePhoto"]
+                        if user["userProfile"]
+                        else None
+                    ),
                 }
             )
         return users
