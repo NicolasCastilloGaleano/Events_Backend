@@ -141,9 +141,9 @@ class EventView:
                 )
             return (
                 jsonify(
-                    error_response("No se encontraron usuarios para este evento", None)
+                    success_response([], "No se encontraron usuarios para este evento")
                 ),
-                404,
+                200,
             )
         except Exception as e:
             return (

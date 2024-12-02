@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from modules.event.routes import event_bp
 from modules.inscription.routes import inscription_bp
+from modules.certificate.routes import certificate_bp
 from config.data_base import Database
 from config.config import Config
 from flask_cors import CORS
@@ -63,6 +64,8 @@ CORS(event_bp)
 app.register_blueprint(event_bp, url_prefix="/events")
 CORS(inscription_bp)
 app.register_blueprint(inscription_bp, url_prefix="/inscriptions")
+CORS(certificate_bp)
+app.register_blueprint(certificate_bp, url_prefix="/certificates")
 
 if __name__ == "__main__":
     app.run(debug=True)
