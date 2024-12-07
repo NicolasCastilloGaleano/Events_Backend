@@ -86,8 +86,19 @@ class EventView:
                 event = self.event_service.get_event_by_id(inscription["event_id"])
                 event["inscription_id"] = inscription["_id"]
                 if data:
-                    if data["date"] in event["date"]:
-                        events.append(event)
+                    if "participated" in data:
+                        if inscription["participated"] is True:
+                            if "date" in data:
+                                if data["date"] in event["date"]:
+                                    events.append(event)
+                            else:
+                                events.append(event)
+                    else:
+                        if "date" in data:
+                            if data["date"] in event["date"]:
+                                events.append(event)
+                        else:
+                            events.append(event)
                 else:
                     events.append(event)
             if events:
