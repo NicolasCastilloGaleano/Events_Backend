@@ -25,14 +25,13 @@ class EventView:
             filters = {
                 "site": data["site"],
                 "date": data["date"],
-                "time": data["time"],
             }
             conflict_event = self.event_service.get_events(filters)
             if conflict_event:
                 return (
                     jsonify(
                         error_response(
-                            "Ya existe un evento en este horario y lugar", None
+                            "Ya existe un evento en esta fecha y lugar", None
                         )
                     ),
                     400,

@@ -82,6 +82,10 @@ class NotificationView:
                 event_notifications = self.notification_service.get_event_notifications(
                     inscription["event_id"]
                 )
+                event = self.event_service.get_event_by_id(inscription["event_id"])
+                for notification in event_notifications:
+                    notification["event_name"] = event["name"]
+                    notification["event_image"] = event["image"]
                 notifications.extend(event_notifications)
             if notifications:
                 notifications = sorted(
