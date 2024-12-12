@@ -187,6 +187,23 @@ class EventView:
                 500,
             )
 
+    def change_status(self, event_id):
+        try:
+            self.event_service.change_status(event_id)
+            return (
+                jsonify(success_response([], "Evento actualizado con exito")),
+                201,
+            )
+        except Exception as e:
+            return (
+                jsonify(
+                    system_error_response(
+                        "Error del sistema al intentar actualizar un evento", str(e)
+                    )
+                ),
+                500,
+            )
+
     def delete_event(self, event_id):
         try:
             self.event_service.delete_event(event_id)
