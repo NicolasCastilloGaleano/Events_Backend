@@ -3,6 +3,7 @@ from modules.event.routes import event_bp
 from modules.inscription.routes import inscription_bp
 from modules.certificate.routes import certificate_bp
 from modules.notification.routes import notification_bp
+from modules.feedback.routes import feedback_bp
 from config.data_base import Database
 from config.config import Config
 from flask_cors import CORS
@@ -69,6 +70,8 @@ CORS(certificate_bp)
 app.register_blueprint(certificate_bp, url_prefix="/certificates")
 CORS(notification_bp)
 app.register_blueprint(notification_bp, url_prefix="/notifications")
+CORS(feedback_bp)
+app.register_blueprint(feedback_bp, url_prefix="/feedbacks")
 
 if __name__ == "__main__":
     app.run(debug=True)

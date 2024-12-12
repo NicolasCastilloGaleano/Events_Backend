@@ -81,5 +81,12 @@ class EventService:
             {"_id": event_id}, {"$set": update_data}
         )
 
+    def change_status(self, event_id):
+        event = self.get_event_by_id(event_id)
+        return self.get_collection().update_one(
+            {"_id": event_id},
+            {"$set": {"is_active": (True if event["is_active"] is False else False)}},
+        )
+
     def delete_event(self, event_id):
         return self.get_collection().delete_one({"_id": event_id})
